@@ -11,7 +11,7 @@ import pickle as cPickle
 SHAPE = (500, 500)
 
 def read_files(directory):
-   print("Reading files...")
+   print "Reading files..."
    s = 1
    feature_list = list()
    label_list   = list()
@@ -48,7 +48,7 @@ def extract_feature(image_file):
 
 if __name__ == "__main__":
    if len(sys.argv) < 2:
-      print ("Usage: python extract_features.py [image_folder]")
+      print "Usage: python extract_features.py [image_folder]"
       exit()
 
    # Directory containing subfolders with images in them.
@@ -62,19 +62,19 @@ if __name__ == "__main__":
 
    # checking for model
    if os.path.isfile("svm_model.pkl"):
-      print ("Using previous model...")
+      print "Using previous model..."
       svm = cPickle.load(open("svm_model.pkl", "rb"))
    else:
-      print ("Fitting")
+      print "Fitting"
 
       # Fitting model
-      svm = SVC()
+      svm = SVC(gamma="scale")
       svm.fit(X_train, y_train)
 
-      print ("Saving model...")
+      print "Saving model..."
       cPickle.dump(svm, open("svm_model.pkl", "wb"))
 
-   print ("Testing...\n")
+   print "Testing...\n"
   
    right = 0
    total = 0
@@ -88,18 +88,3 @@ if __name__ == "__main__":
 
    accuracy = float(right)/float(total)*100
    print (str(accuracy) + "% accuracy")
-
-
-# load saved model
-#with open('svm_model.pkl' , 'rb') as f:
-    #lr = cPickle.load(f)
-
-#img2 = cv2.imread('mmm.jpg')
-#print(img2)
-#img2 = cv2.resize(img2, SHAPE, interpolation = cv2.INTER_CUBIC)
-#img2 = img2.flatten()
-#img2 = img2/np.mean(img2)
-#img2 = img2.reshape(1, -1)
-#print("make a prediction")
-#w = lr.predict(img2)
-#print(w)
